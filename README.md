@@ -24,8 +24,8 @@ onMessage = sendMessageResponse "Hello World"
 ```
 
 The `MessageHandlers` type is defined in `Telewrap.Types` and allows you to specify
-handlers for Telegram `Message`, `InlineQuery` and `CallbackQuery` types. 
-The Hello World bot only registers a handler for ordinary text messages.
+handlers for Telegram's `Message`, `InlineQuery` and `CallbackQuery` types. 
+The Hello World bot example above only registers a handler for ordinary text messages.
 
 As you can see from the type signature of `main`, *Telewrap* is stateful but
 the simple Hello World example is stateless and passes void `()` as the 
