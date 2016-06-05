@@ -35,9 +35,9 @@ so you are free to import and use any of the functionality `Web.Telegram.API.Bot
 provides.
 
 The development of *Telewrap* has only just started. If you find that
-you need to access `Web.Telegram.API.Bot` a lot - and you likely will - please 
-consider improving `Telewrap.Helpers` or `Telewrap.Messaging` and sending me a 
-pull request.
+you need to access `Web.Telegram.API.Bot` a lot - and you will at this early stage - 
+please consider improving `Telewrap.Helpers` or `Telewrap.Messaging` and send 
+me a pull request.
 
 A big Thank You to [klappvisor](https://github.com/klappvisor), the author of 
 the [Haskell Telegram API](https://github.com/klappvisor/haskell-telegram-api).
