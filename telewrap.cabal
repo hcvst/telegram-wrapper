@@ -1,0 +1,9 @@
+name:              telewrap
+version:           0.1
+Build-Type:        Simple
+cabal-version:     >= 1.2
+
+executable telewrap
+  main-is:         Main.hs
+  hs-source-dirs:  src
+  build-depends:   base
