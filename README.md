@@ -6,7 +6,7 @@ that let's you focus on writing Telegram bots.
 
 Let's look at a Hello World example.
 
-```
+```haskell
 {-# LANGUAGE OverloadedStrings #-}
 
 module Main where
