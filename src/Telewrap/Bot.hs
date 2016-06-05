@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE BangPatterns #-}
 
-module Telewrap.Bot (newBot, runBot, getState, putState) where
+module Telewrap.Bot (newBot, runBot) where
 
 import Control.Concurrent (threadDelay)
 import Control.Monad (forever)
@@ -59,13 +59,3 @@ processUpdate update = do
 
     state <- get
     put $ state {tw_offset = (Just $ (update_id update) + 1)}
-
-getState :: Bot a (a)
-getState = do
-    state <- get
-    return $ tw_state state
-
-putState :: a -> Bot a ()
-putState clientState = do
-    state <- get
-    put $ state {tw_state = clientState}
