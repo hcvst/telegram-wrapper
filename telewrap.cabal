@@ -6,4 +6,6 @@ cabal-version:     >= 1.2
 executable telewrap
   main-is:         Main.hs
   hs-source-dirs:  src
-  build-depends:   base
+  build-depends:   base, mtl, text,
+                   http-client, http-client-tls, servant-client,
+                   telegram-api
