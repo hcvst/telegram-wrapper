@@ -4,7 +4,7 @@ Telewrap
 *Telewrap* is a layer on top of the [Haskell Telegram API](https://github.com/klappvisor/haskell-telegram-api)
 that let's you focus on writing Telegram bots.
 
-Let's look at a Hello World example.
+Let's look at a **Hello World** example.
 
 ```haskell
 {-# LANGUAGE OverloadedStrings #-}
