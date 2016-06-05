@@ -11,8 +11,6 @@ Let's look at a Hello World example.
 
 module Main where
 
-import qualified Data.Text as T
-
 import Telewrap
 
 main :: IO ((), BotState ())
