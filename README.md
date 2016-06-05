@@ -24,9 +24,11 @@ onMessage = sendMessageResponse "Hello World"
 ```
 
 As you can see from the type signature of `main`, *Telewrap* is stateful but
-the Hello World example does not make use of it and passes void `()` as the 
-third argument to `newBot`. You can access and update your state using 
-`getState` and `putState` respectively.
+the simple Hello World example is stateless and passes void `()` as the 
+third argument to `newBot`. 
+
+*Telewrap* exposes to `Telewrap.Helpers` `getState` and `putState` to access and
+update your state respectively.
 
 Types such as `Message` are re-exported by *Telewrap* from `Web.Telegram.API.Bot`
 so you are free to import and use any of the functionality `Web.Telegram.API.Bot`
