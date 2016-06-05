@@ -1,13 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE BangPatterns #-}
 
-module Telewrap.Bot (newBot, runBot) where
+module Telewrap.Bot (newBot, runBot, getState, putState) where
 
 import Control.Concurrent (threadDelay)
 import Control.Monad (forever)
 import Control.Monad.Reader
 import Control.Monad.State
 import qualified Data.Text as T
+import Data.Maybe
 import Data.Monoid ((<>))
 import Network.HTTP.Client (Manager, newManager)
 import Network.HTTP.Client.TLS (tlsManagerSettings)
@@ -17,9 +18,6 @@ import System.IO (stderr, hPutStrLn)
 import Web.Telegram.API.Bot
 
 import Telewrap.Types
-
-
-import Data.Maybe
 
 newBot :: T.Text -> MessageHandlers a -> a -> IO (BotSettings a)
 newBot tokenString handlers clientState = do
@@ -61,3 +59,13 @@ processUpdate update = do
 
     state <- get
     put $ state {tw_offset = (Just $ (update_id update) + 1)}
+
+getState :: Bot a (a)
+getState = do
+    state <- get
+    return $ tw_state state
+
+putState :: a -> Bot a ()
+putState clientState = do
+    state <- get
+    put $ state {tw_state = clientState}

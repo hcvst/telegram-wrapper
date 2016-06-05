@@ -8,9 +8,7 @@ import Control.Monad.State
 
 import qualified Data.Text as T
 
-import Telewrap.Types
-import Telewrap.Bot
-import Web.Telegram.API.Bot
+import Telewrap
 
 main :: IO ((), BotState (Maybe a))
 main = runBot =<< newBot token handlers Nothing
@@ -19,10 +17,4 @@ main = runBot =<< newBot token handlers Nothing
     handlers = MessageHandlers (Just onMessage) Nothing Nothing
 
 onMessage :: Message -> Bot (Maybe a) ()
-onMessage msg = do
-
-    liftIO $ putStrLn "onMessage called"
-    let request = (sendMessageRequest (T.pack.show.chat_id.chat $ msg) "Hi")
-    config <- ask
-    liftIO $ sendMessage (tw_token config) request (tw_manager config)
-    return ()
+onMessage msg = sendMessageResponse msg "Hello World"
