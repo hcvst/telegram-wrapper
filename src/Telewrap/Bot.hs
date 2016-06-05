@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE BangPatterns #-}
 
-module Telewrap.Bot (setupBot, run) where
+module Telewrap.Bot (newBot, runBot) where
 
 import Control.Concurrent (threadDelay)
 import Control.Monad (forever)
@@ -17,14 +18,17 @@ import Web.Telegram.API.Bot
 
 import Telewrap.Types
 
-setupBot :: T.Text -> MessageHandlers a -> a -> IO (BotSettings a)
-setupBot tokenString handlers clientState = do
+
+import Data.Maybe
+
+newBot :: T.Text -> MessageHandlers a -> a -> IO (BotSettings a)
+newBot tokenString handlers clientState = do
     let token = Token $ "bot" <> tokenString
     manager <- newManager tlsManagerSettings
     return $ BotSettings (BotConfig token handlers manager) (BotState Nothing clientState)
 
-run :: BotSettings a -> IO ((), BotState a)
-run botSettings = runStateT (runReaderT poll (botConfig botSettings)) (botState botSettings)
+runBot :: BotSettings a -> IO ((), BotState a)
+runBot botSettings = runStateT (runReaderT poll (tw_botConfig botSettings)) (tw_botState botSettings)
 
 poll :: Bot a ()
 poll = forever $ do
@@ -37,24 +41,23 @@ getTelegramUpdates :: Bot a (Either ServantError UpdatesResponse)
 getTelegramUpdates = do
     config <- ask
     state <- get
-    liftIO $ getUpdates (token config) (offset state) Nothing (Just 10) (manager config)
+    liftIO $ getUpdates (tw_token config) (tw_offset state) Nothing (Just 10) (tw_manager config)
 
 processUpdatesResponse :: UpdatesResponse -> Bot a ()
 processUpdatesResponse UpdatesResponse {update_result = updates} = mapM_ processUpdate updates
 
 processUpdate :: Update -> Bot a ()
 processUpdate update = do
-    BotConfig {handlers = MessageHandlers {
-          onMessage = onMg
-        , onInlineQuery = onIQ
-        , onCallbackQuery = onCQ
+    BotConfig {tw_handlers = MessageHandlers {
+          tw_onMessage = onMg
+        , tw_onInlineQuery = onIQ
+        , tw_onCallbackQuery = onCQ
         }
     } <- ask
 
-    case update of
-        Update {message=mg}        -> return (onMg <*> mg)
-        Update {inline_query=iq}   -> return (onIQ <*> iq)
-        Update {callback_query=cq} -> return (onCQ <*> cq)
+    maybe (return ()) id $ onMg <*> (message update)
+    maybe (return ()) id $ onIQ <*> (inline_query update)
+    maybe (return ()) id $ onCQ <*> (callback_query update)
 
     state <- get
-    put $ state {offset = (Just $ update_id update)}
+    put $ state {tw_offset = (Just $ (update_id update) + 1)}
