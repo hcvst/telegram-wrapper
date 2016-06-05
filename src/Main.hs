@@ -7,7 +7,7 @@ import Telewrap
 main :: IO ((), BotState ())
 main = runBot =<< newBot token handlers ()
   where
-    token = "131224483:AAE9t3N83-1FwWhnx4eay80I0HI1a65tqqI"
+    token = "131224483:AAHkuSrad7c_Bmb8-vxSsI5HnmDiJTn7K1c"
     handlers = MessageHandlers (Just onMessage) Nothing Nothing
 
 onMessage :: Message -> Bot ()()
