@@ -43,5 +43,5 @@ you need to access `Web.Telegram.API.Bot` a lot - and you will at this early sta
 please consider improving `Telewrap.Helpers` or `Telewrap.Messaging` and send 
 me a pull request.
 
-A big Thank You to [klappvisor](https://github.com/klappvisor), the author of 
+A big Thank You to [klappvisor](https://github.com/klappvisor), the primary author of 
 the [Haskell Telegram API](https://github.com/klappvisor/haskell-telegram-api).
