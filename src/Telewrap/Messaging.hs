@@ -8,8 +8,8 @@ import Web.Telegram.API.Bot
 import Telewrap.Types
 import Telewrap.Helpers
 
-sendMessageResponse :: Message -> T.Text -> Bot a ()
-sendMessageResponse msg text = do
+sendMessageResponse :: T.Text -> Message -> Bot a ()
+sendMessageResponse text msg = do
     let request = sendMessageRequest (getChatIdFromMessage msg) text
     config <- ask
     liftIO $ sendMessage (tw_token config) request (tw_manager config)
