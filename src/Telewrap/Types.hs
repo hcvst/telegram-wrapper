@@ -26,6 +26,7 @@ data MessageHandlers a = MessageHandlers {
       tw_onMessage       :: Maybe (Message -> Bot a ())
     , tw_onInlineQuery   :: Maybe (InlineQuery -> Bot a ())
     , tw_onCallbackQuery :: Maybe (CallbackQuery -> Bot a ())
+    , tw_onUpdate        :: Maybe (Update -> Bot a ())
     }
 
 type Bot a = ReaderT (BotConfig a) (StateT (BotState a) IO)

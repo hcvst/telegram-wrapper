@@ -49,8 +49,11 @@ processUpdate update = do
           tw_onMessage = onMg
         , tw_onInlineQuery = onIQ
         , tw_onCallbackQuery = onCQ
+        , tw_onUpdate = onUp
         }
     } <- ask
+
+    maybe (return ()) ($ update) onUp
 
     maybe (return ()) id $ onMg <*> (message update)
     maybe (return ()) id $ onIQ <*> (inline_query update)
